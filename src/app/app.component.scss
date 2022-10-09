@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  max-width: 750px;
+  margin: 3rem auto;
+}
+
+form {
+  margin-top: 3rem;
+
+  display: grid;
+  gap: 1rem 0.5rem;
+  justify-content: center;
+  grid-template-columns: auto minmax(auto, 400px);
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation.first {
+  justify-content: end;
+}

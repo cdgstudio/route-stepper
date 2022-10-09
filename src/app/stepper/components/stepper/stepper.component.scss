@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  --circle-size: clamp(1.5rem, 5vw, 3rem);
+  --spacing: clamp(0.25rem, 2vw, 0.5rem);
+}
+
+ol {
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+  justify-content: center;
+  gap: 1rem;
+}
+
+h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &.active {
+    color: hsl(100deg 74% 55%);
+  }
+
+  &.done {
+    color: hsl(100deg 60% 30%);
+  }
+}
+
+svg {
+  width: var(--circle-size);
+  height: var(--circle-size);
+}
+
+.spacer {
+  position: relative;
+  top: calc(var(--circle-size) * 1 / 2);
+  // align-self: center;
+  height: 2px;
+  background-color: #e0e0e0;
+  flex: 1;
+  max-width: 10rem;
+}
+
+text {
+  font-size: 0.75rem;
+}
+
+li.done + .spacer {
+  background-color: hsl(100deg 60% 30%);
+}
