@@ -1,57 +1,19 @@
+<h1>Lazy loaded stepper</h1>
+
 <app-stepper>
-  <app-step>
-    <ng-template appStepLabel> User form </ng-template>
+  <ng-template appStepLabel="user"> User form </ng-template>
+  <ng-template appStepLabel="address"> Address form </ng-template>
+  <ng-template appStepLabel="user"> Account form </ng-template>
+  <ng-template appStepLabel="user"> Summary </ng-template>
 
-    <form id="userForm" [formGroup]="userForm">
-      <label for="firstName">First Name</label>
-      <input
-        id="firstName"
-        formControlName="firstName"
-        type="text"
-        autocomplete="off"
-      />
-      <label for="lastName">Last Name</label>
-      <input
-        id="lastName"
-        formControlName="lastName"
-        type="text"
-        autocomplete="off"
-      />
-      <label>Age</label>
-      <input type="number" autocomplete="off" />
-    </form>
-    <div class="navigation first">
-      <button form="userForm" type="submit" appAsyncAction appNextStep>
-        Next
-      </button>
-    </div>
-  </app-step>
-
+  <router-outlet></router-outlet>
+</app-stepper>
+<!--
+<app-stepper>
   <app-step>
     <ng-template appStepLabel> Address form </ng-template>
 
-    <form id="addressForm" [formGroup]="addressForm">
-      <label for="street">Street</label>
-      <input
-        id="street"
-        formControlName="street"
-        type="text"
-        autocomplete="off"
-      />
-      <label for="city">City</label>
-      <input id="city" formControlName="city" type="text" autocomplete="off" />
-      <label for="state">State</label>
-      <input formControlName="state" type="text" autocomplete="off" />
-      <label for="zip">Zip</label>
-      <input id="zip" formControlName="zip" type="text" autocomplete="off" />
-    </form>
 
-    <div class="navigation">
-      <button type="button" appAsyncAction appPreviousStep>Previous</button>
-      <button form="addressForm" type="submit" appAsyncAction appNextStep>
-        Next
-      </button>
-    </div>
   </app-step>
 
   <app-step>
@@ -102,4 +64,4 @@
       </dd>
     </dl>
   </app-step>
-</app-stepper>
+</app-stepper> -->

@@ -5,15 +5,26 @@ import {
   ContentChildren,
   QueryList,
   TemplateRef,
+  inject,
 } from '@angular/core';
-import { map, ReplaySubject } from 'rxjs';
-import { StepComponent } from '../step/step.component';
-
-function isLabeled(
-  step: TemplateRef<void> | undefined
-): step is TemplateRef<void> {
-  return !!step;
-}
+import {
+  ReplaySubject,
+  combineLatest,
+  filter,
+  map,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { StepLabelDirective } from '../../directives/step-label.directive';
+import {
+  ActivatedRoute,
+  ActivationEnd,
+  ActivationStart,
+  NavigationEnd,
+  Router,
+} from '@angular/router';
 
 @Component({
   selector: 'app-stepper',
@@ -22,43 +33,45 @@ function isLabeled(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepperComponent implements AfterContentInit {
-  @ContentChildren(StepComponent, { descendants: false })
-  protected steps!: QueryList<StepComponent>;
+  @ContentChildren(StepLabelDirective, { descendants: false })
+  labelsQueryList!: QueryList<StepLabelDirective>;
 
-  protected contentInit$ = new ReplaySubject<void>(1);
-  protected steps$ = this.contentInit$.pipe(map(() => this.steps.toArray()));
+  private router = inject(Router);
+  private contentInit$ = new ReplaySubject<void>(1);
+  private activationStart$ = this.router.events.pipe(
+    filter((event): event is ActivationEnd => event instanceof ActivationStart)
+  );
 
-  private _stepIndex = 0;
-  protected get stepIndex() {
-    return this._stepIndex;
-  }
-  protected set stepIndex(value) {
-    this._stepIndex = value;
-    this.stepContent$.next(this.steps.get(this.stepIndex)!.stepContent);
-  }
-  protected stepContent$ = new ReplaySubject<TemplateRef<void>>(1);
+  private stepIndex$ = this.contentInit$.pipe(
+    switchMap(() => this.activationStart$),
+    map((event) => {
+      const path = event.snapshot.routeConfig?.path;
+      const labels = this.labelsQueryList.toArray();
 
-  protected showLabels$ = this.steps$.pipe(
-    map((steps) => steps.map((step) => step.label)),
-    map((perhapsLabels) => {
-      const onlyLabels = perhapsLabels.filter(isLabeled);
-      return onlyLabels.length === perhapsLabels.length
-        ? onlyLabels
-        : (false as const);
+      return labels.findIndex((label) => label.routerPath === path);
+    }),
+    filter((index) => index !== -1)
+  );
+  private labels$ = this.contentInit$.pipe(
+    switchMap(() =>
+      combineLatest([this.labelsQueryList.changes, this.activationStart$])
+    ),
+    startWith(void 0),
+    map(() => {
+      return this.labelsQueryList
+        .toArray()
+        .sort((a, b) => a.stepIndex - b.stepIndex)
+        .map((el) => el.templateRef);
     })
   );
+
+  data$ = combineLatest({
+    labels: this.labels$,
+    stepIndex: this.stepIndex$,
+  });
 
   ngAfterContentInit(): void {
     this.contentInit$.next();
     this.contentInit$.complete();
-    this.stepContent$.next(this.steps.get(this.stepIndex)!.stepContent);
-  }
-
-  nextStep() {
-    this.stepIndex++;
-  }
-
-  previousStep() {
-    this.stepIndex--;
   }
 }

@@ -1,0 +1,21 @@
+<form id="userForm" [formGroup]="userForm">
+  <label for="firstName">First Name</label>
+  <input
+    id="firstName"
+    formControlName="firstName"
+    type="text"
+    autocomplete="off"
+  />
+  <label for="lastName">Last Name</label>
+  <input
+    id="lastName"
+    formControlName="lastName"
+    type="text"
+    autocomplete="off"
+  />
+  <label>Age</label>
+  <input type="number" autocomplete="off" />
+</form>
+<div class="navigation first">
+  <button form="userForm" type="submit" routerLink="/address">Next</button>
+</div>
