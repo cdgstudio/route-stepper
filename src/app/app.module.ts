@@ -1,11 +1,10 @@
 import { NgModule, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AsyncActionModule } from './async-action';
-import { StepperModule } from './stepper/stepper.module';
-import { Router, RouterModule, Routes, UrlTree } from '@angular/router';
 import { VeryLongProcessService } from './modules/very-long-process/very-long-process.service';
+import { StepperModule } from './stepper/stepper.module';
 
 const routes: Routes = [
   {
@@ -17,9 +16,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/very-long-process/address'),
     canActivate: [
       () =>
-        inject(VeryLongProcessService).userForm.dirty
-          ? true
-          : inject(Router).createUrlTree(['/user']),
+        !inject(VeryLongProcessService).userForm.valid
+          ? inject(Router).createUrlTree(['/user'])
+          : true,
     ],
   },
   {
@@ -27,9 +26,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/very-long-process/account'),
     canActivate: [
       () =>
-        inject(VeryLongProcessService).addressForm.dirty
-          ? true
-          : inject(Router).createUrlTree(['/address']),
+        !inject(VeryLongProcessService).addressForm.valid
+          ? inject(Router).createUrlTree(['/address'])
+          : true,
     ],
   },
   {
@@ -37,9 +36,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/very-long-process/summary'),
     canActivate: [
       () =>
-        inject(VeryLongProcessService).accountForm.dirty
-          ? true
-          : inject(Router).createUrlTree(['/account']),
+        !inject(VeryLongProcessService).accountForm.valid
+          ? inject(Router).createUrlTree(['/account'])
+          : true,
     ],
   },
   {
@@ -54,7 +53,6 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     StepperModule,
-    AsyncActionModule,
     ReactiveFormsModule,
     RouterModule,
     RouterModule.forRoot(routes),

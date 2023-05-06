@@ -28,7 +28,7 @@ export class StepperComponent implements AfterContentInit {
 
   private contentInit$ = new ReplaySubject<void>(1);
   private activationStart$ = this.router.events.pipe(
-    filter((event): event is ActivationEnd => event instanceof ActivationStart)
+    filter((event): event is ActivationEnd => event instanceof ActivationEnd)
   );
 
   private stepIndex$ = this.contentInit$.pipe(
