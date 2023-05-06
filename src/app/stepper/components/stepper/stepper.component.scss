@@ -22,13 +22,14 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: rgba(0, 0, 0, 0.38);
 
   &.active {
-    color: hsl(100deg 74% 55%);
+    color: #4285f4;
   }
 
   &.done {
-    color: hsl(100deg 60% 30%);
+    color: #4285f4;
   }
 }
 
@@ -40,17 +41,16 @@ svg {
 .spacer {
   position: relative;
   top: calc(var(--circle-size) * 1 / 2);
-  // align-self: center;
   height: 2px;
-  background-color: #e0e0e0;
+  background-color: rgba(0, 0, 0, 0.1);
   flex: 1;
   max-width: 10rem;
 }
 
 text {
-  font-size: 0.75rem;
+  font-size: 0.5rem;
 }
 
 li.done + .spacer {
-  background-color: hsl(100deg 60% 30%);
+  background-color: #4285f4;
 }

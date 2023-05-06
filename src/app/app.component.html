@@ -1,67 +1,10 @@
-<h1>Lazy loaded stepper</h1>
-
 <app-stepper>
   <ng-template appStepLabel="user"> User form </ng-template>
   <ng-template appStepLabel="address"> Address form </ng-template>
-  <ng-template appStepLabel="user"> Account form </ng-template>
-  <ng-template appStepLabel="user"> Summary </ng-template>
+  <ng-template appStepLabel="account"> Account form </ng-template>
+  <ng-template appStepLabel="summary"> Summary </ng-template>
 
-  <router-outlet></router-outlet>
+  <div class="steps">
+    <router-outlet></router-outlet>
+  </div>
 </app-stepper>
-<!--
-<app-stepper>
-  <app-step>
-    <ng-template appStepLabel> Address form </ng-template>
-
-
-  </app-step>
-
-  <app-step>
-    <ng-template appStepLabel> Account form </ng-template>
-
-    <form id="accountForm" [formGroup]="accountForm">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        formControlName="email"
-        type="email"
-        autocomplete="off"
-      />
-      <label for="password">Password</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        autocomplete="off"
-      />
-    </form>
-
-    <div class="navigation">
-      <button type="button" appAsyncAction appPreviousStep>Previous</button>
-      <button type="submit" [appAsyncAction]="save$" appNextStep>Next</button>
-    </div>
-  </app-step>
-
-  <app-step>
-    <ng-template appStepLabel> Summary </ng-template>
-
-    <p>Forms summary:</p>
-
-    <dl>
-      <dt>User form</dt>
-      <dd>
-        <pre>{{ userForm.value | json }}</pre>
-      </dd>
-
-      <dt>User form</dt>
-      <dd>
-        <pre>{{ addressForm.value | json }}</pre>
-      </dd>
-
-      <dt>User form</dt>
-      <dd>
-        <pre>{{ accountForm.value | json }}</pre>
-      </dd>
-    </dl>
-  </app-step>
-</app-stepper> -->

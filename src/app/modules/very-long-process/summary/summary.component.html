@@ -1,0 +1,45 @@
+<div class="form-container">
+  <h2>Personal Information</h2>
+  <ul class="key-value-list">
+    <li>
+      <span class="key">First Name:</span>
+      <span class="value">{{ userForm.value.firstName }}</span>
+    </li>
+    <li>
+      <span class="key">Last Name:</span>
+      <span class="value">{{ userForm.value.lastName }}</span>
+    </li>
+  </ul>
+
+  <h2>Address Information</h2>
+  <ul class="key-value-list">
+    <li>
+      <span class="key">Street:</span>
+      <span class="value">{{ addressForm.value.street }}</span>
+    </li>
+    <li>
+      <span class="key">City:</span>
+      <span class="value">{{ addressForm.value.city }}</span>
+    </li>
+    <li>
+      <span class="key">State:</span>
+      <span class="value">{{ addressForm.value.state }}</span>
+    </li>
+    <li>
+      <span class="key">Zip:</span>
+      <span class="value">{{ addressForm.value.zip }}</span>
+    </li>
+  </ul>
+
+  <h2>Account Information</h2>
+  <ul class="key-value-list">
+    <li>
+      <span class="key">Email:</span>
+      <span class="value"> {{ accountForm.value.email }}</span>
+    </li>
+    <li>
+      <span class="key">Password:</span>
+      <span class="value"> {{ accountForm.value.password }}</span>
+    </li>
+  </ul>
+</div>

@@ -4,27 +4,17 @@ import {
   Component,
   ContentChildren,
   QueryList,
-  TemplateRef,
-  inject,
 } from '@angular/core';
+import { ActivationEnd, ActivationStart, Router } from '@angular/router';
 import {
   ReplaySubject,
   combineLatest,
   filter,
   map,
-  of,
   startWith,
   switchMap,
-  tap,
 } from 'rxjs';
 import { StepLabelDirective } from '../../directives/step-label.directive';
-import {
-  ActivatedRoute,
-  ActivationEnd,
-  ActivationStart,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
 
 @Component({
   selector: 'app-stepper',
@@ -36,7 +26,6 @@ export class StepperComponent implements AfterContentInit {
   @ContentChildren(StepLabelDirective, { descendants: false })
   labelsQueryList!: QueryList<StepLabelDirective>;
 
-  private router = inject(Router);
   private contentInit$ = new ReplaySubject<void>(1);
   private activationStart$ = this.router.events.pipe(
     filter((event): event is ActivationEnd => event instanceof ActivationStart)
@@ -57,18 +46,15 @@ export class StepperComponent implements AfterContentInit {
       combineLatest([this.labelsQueryList.changes, this.activationStart$])
     ),
     startWith(void 0),
-    map(() => {
-      return this.labelsQueryList
-        .toArray()
-        .sort((a, b) => a.stepIndex - b.stepIndex)
-        .map((el) => el.templateRef);
-    })
+    map(() => this.labelsQueryList.toArray().map((el) => el.templateRef))
   );
 
   data$ = combineLatest({
     labels: this.labels$,
     stepIndex: this.stepIndex$,
   });
+
+  constructor(private router: Router) {}
 
   ngAfterContentInit(): void {
     this.contentInit$.next();

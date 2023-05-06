@@ -9,15 +9,4 @@ import { tap, timer } from 'rxjs';
 })
 export class AppComponent {
   save$ = timer(2_000).pipe(tap(() => alert('Forms saved')));
-
-  accountForm = new FormGroup({
-    email: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    password: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
 }
